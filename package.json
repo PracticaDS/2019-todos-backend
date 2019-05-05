@@ -1,0 +1,26 @@
+{
+  "name": "2019-todo-list-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon --exec babel-node -- index",
+    "test": "jest --runInBand --watch",
+    "lint": "eslint ./**/*.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.2",
+    "@types/jest": "^24.0.11",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.5.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-jest": "^22.5.1",
+    "eslint-plugin-node": "^9.0.1",
+    "jest": "^24.5.0",
+    "jest-cli": "^24.5.0",
+    "nodemon": "^1.19.0"
+  }
+}
