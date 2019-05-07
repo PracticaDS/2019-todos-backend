@@ -3,4 +3,4 @@ node_js:
   - "11.10.1"
 script:
   - npm run lint
-  - npm test
+  - npm test:ci
