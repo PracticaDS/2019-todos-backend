@@ -2,7 +2,7 @@ import _ from 'lodash'
 /* eslint-disable no-underscore-dangle */
 
 let currentId = 0;
-const todosInternal = {}
+let todosInternal = {}
 const todos = {
   getAll: () => _.cloneDeep(_.values(todosInternal)),
   add: ({ description, done = false }) => {
@@ -18,6 +18,9 @@ const todos = {
     if (_.isString(body.description)) todo.description = body.description;
     todosInternal[id] = todo;
     return _.clone(todo)
+  },
+  clear: () => {
+    todosInternal = {}
   }
 }
 
