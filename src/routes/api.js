@@ -42,7 +42,13 @@ router.post('/todos', [
 
 router.put('/todos/:id', [
   validateTodoBody,
-  (req, res) => findTodo(req.params.id, res, () => res.json(todos.update(req.params.id, req.body)))
+  (req, res) => findTodo(req.params.id, res, 
+    () => res.json(todos.update(req.params.id, req.body)))
 ])
+
+router.delete('/todos', (req, res) => {
+  todos.clear();
+  res.json(todos.getAll());
+})
 
 export default router

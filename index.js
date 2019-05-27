@@ -4,6 +4,6 @@ const isProduction = process.env.NODE_ENV === 'production'
 const port = isProduction ? process.env.PORT : 3001
 
 app.listen(port, () => {
-  /* eslint-disable no-console */
+  // eslint-disable-next-line no-console
   console.log(`Server running on port ${port}`)
 })
