@@ -21,6 +21,12 @@ const todos = {
   },
   clear: () => {
     todosInternal = {}
+  },
+  delete: (id) => {
+    const exists = _.isObject(todosInternal[id]);
+    delete todosInternal[id];
+
+    return exists;
   }
 }
 

@@ -51,4 +51,11 @@ router.delete('/todos', (req, res) => {
   res.json(todos.getAll());
 })
 
+router.delete('/todos/:id', (req, res) => {
+  findTodo(req.params.id, res, (_) => {
+    todos.delete(req.params.id);
+    res.status(204).send();
+  })
+})
+
 export default router
