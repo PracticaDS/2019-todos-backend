@@ -6,13 +6,12 @@ import api from './routes/api'
 
 const app = express()
 
+app.disable('etag');
+
 app.use(morgan('dev'))
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-// app.use((req, res, next) => {
-//   setTimeout(next, 500);
-// })
 
 app.use('/api', api)
 
