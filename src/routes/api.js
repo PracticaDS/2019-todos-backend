@@ -18,17 +18,17 @@ function validate(condition, message) {
 const validateTodoBody = validate(req => _.isString(req.body.description), 'La descripción es requerida como string');
 
 function findTodo(id, res, ifFound) {
-  const todo = todos.get(id);
-  if (!todo) res.status(404).json({ status: 'not-found' })
-  ifFound(todo)
+  todos.get(id)
+    .then(ifFound)
+    .catch(() => res.status(404).json({ status: 'not-found' }))
 }
 
 router.get('/', (req, res) => {
   res.json({ status: 'ok' })
 })
 
-router.get('/todos', (req, res) => {
-  res.json(todos.getAll())
+router.get('/todos', async (req, res) => {
+  res.json(await todos.getAll())
 })
 
 router.get('/todos/:id', (req, res) => {
@@ -37,23 +37,23 @@ router.get('/todos/:id', (req, res) => {
 
 router.post('/todos', [
   validateTodoBody,
-  (req, res) => res.json(todos.add(req.body))
+  async (req, res) => res.json(await todos.add(req.body))
 ])
 
 router.put('/todos/:id', [
   validateTodoBody,
   (req, res) => findTodo(req.params.id, res, 
-    () => res.json(todos.update(req.params.id, req.body)))
+    async () => res.json(await todos.update(req.params.id, req.body)))
 ])
 
-router.delete('/todos', (req, res) => {
-  todos.clear();
-  res.json(todos.getAll());
+router.delete('/todos', async (req, res) => {
+  await todos.clear();
+  res.json(await todos.getAll());
 })
 
-router.delete('/todos/:id', (req, res) => {
-  findTodo(req.params.id, res, (_) => {
-    todos.delete(req.params.id);
+router.delete('/todos/:id', async (req, res) => {
+  findTodo(req.params.id, res, async (_) => {
+    await todos.delete(req.params.id);
     res.status(204).send();
   })
 })

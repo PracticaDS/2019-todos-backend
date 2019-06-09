@@ -1,33 +1,33 @@
-import _ from 'lodash'
 /* eslint-disable no-underscore-dangle */
+import _ from 'lodash'
+import mongoose from 'mongoose'
 
-let currentId = 0;
-let todosInternal = {}
+const { Schema } = mongoose
+
+const schema = new Schema({
+  description: { type: String, required: true },
+  done: { type: Boolean, default: false },
+})
+
+const Todo = mongoose.model('Todo', schema)
+
 const todos = {
-  getAll: () => _.cloneDeep(_.values(todosInternal)),
-  add: ({ description, done = false }) => {
-    currentId += 1;
-    const newTodo = { description, id: currentId, done };
-    todosInternal[newTodo.id] = newTodo;
-    return _.clone(newTodo)
+  getAll: () => Todo.find({}),
+  add: async ({ description, done = false }) => {
+    const newTodo = new Todo({ description, done });
+    await newTodo.save()
+    return newTodo;
   },
-  get: id => _.clone(todosInternal[_.toNumber(id)]),
-  update: (id, body) => {
-    const todo = todos.get(id);
+  get: id => Todo.findById(id),
+  update: async (id, body) => {
+    const todo = await todos.get(id);
     if (_.isBoolean(body.done)) todo.done = body.done;
     if (_.isString(body.description)) todo.description = body.description;
-    todosInternal[id] = todo;
-    return _.clone(todo)
+    await todo.save()
+    return todo
   },
-  clear: () => {
-    todosInternal = {}
-  },
-  delete: (id) => {
-    const exists = _.isObject(todosInternal[id]);
-    delete todosInternal[id];
-
-    return exists;
-  }
+  clear: () => Todo.remove({}),
+  delete: id => Todo.remove({ _id: id })
 }
 
 export default todos
