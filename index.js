@@ -18,6 +18,6 @@ function validateProductionConfig() {
 validateProductionConfig();
 
 const port = process.env.PORT ? process.env.PORT : 3001
-const mongoUrl = isProduction ? process.env.MONGO_URL : 'mongodb://localhost:27017/todos'
+const mongoUrl = process.env.MONGO_URL ? process.env.MONGO_URL : 'mongodb://localhost:27017/todos'
 
 start(port, mongoUrl)
